@@ -3,7 +3,7 @@ name: Build and publish Windows exe
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: exe
-          path: dist/main.exe
+          path: dist/WechatMsg.exe
 
   publish:
     runs-on: ubuntu-latest
@@ -32,6 +32,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          files: exe/main.exe
+          files: dist/WechatMsg.exe
           tag_name: latest
           release_name: Latest Release
