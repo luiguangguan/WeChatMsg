@@ -25,7 +25,8 @@ jobs:
       - name: Debug
         run: |
           ls dist/ -lh
-          mv dist/main WechatMsg.exe
+          mv dist/main dist/WechatMsg.exe
+          ls dist/ -lh
 
   publish:
     runs-on: ubuntu-latest
