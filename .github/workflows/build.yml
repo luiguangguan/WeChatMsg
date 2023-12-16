@@ -24,7 +24,7 @@ jobs:
           path: dist/WechatMsg.exe
       - name: Debug
         run: |
-          ls -R
+          ls dist/ -R
 
   publish:
     runs-on: ubuntu-latest
