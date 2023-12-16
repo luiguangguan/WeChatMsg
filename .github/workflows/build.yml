@@ -22,6 +22,9 @@ jobs:
         with:
           name: exe  # 确保这个名字与下载步骤中的一致
           path: dist/WechatMsg.exe
+      - name: Debug
+        run: |
+          ls -R
 
   publish:
     runs-on: ubuntu-latest
