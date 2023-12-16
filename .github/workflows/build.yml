@@ -12,13 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install PyInstaller
-        run: pip install pyinstaller
+        run: |
+          pip install pyinstaller
       - name: Build exe
-        run: pyinstaller --onefile --windowed --icon=icon.ico main.py
+        run: |
+          pyinstaller --onefile --windowed --icon=icon.ico main.py
       - name: Upload exe
         uses: actions/upload-artifact@v2
         with:
-          name: exe
+          name: exe  # 确保这个名字与下载步骤中的一致
           path: dist/WechatMsg.exe
 
   publish:
@@ -27,7 +29,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: exe
+          name: exe  # 与上传步骤中的名字一致
       - name: Debug
         run: |
           ls -R
