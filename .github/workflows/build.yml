@@ -1,0 +1,37 @@
+name: Build and publish Windows exe
+
+on:
+  push:
+    branches:
+      - main
+    workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+      - name: Build exe
+        run: pyinstaller --onefile --windowed --icon=icon.ico main.py
+      - name: Upload exe
+        uses: actions/upload-artifact@v2
+        with:
+          name: exe
+          path: dist/main.exe
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: exe
+      - name: Upload exe to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: exe/main.exe
+          tag_name: latest
+          release_name: Latest Release
