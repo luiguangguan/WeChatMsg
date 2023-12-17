@@ -26,7 +26,7 @@ jobs:
       
       - name: Build exe
         run: |
-          chcp 65001
+          # chcp 65001
           pyinstaller -F --onefile --windowed --debug all main.py
           ls dist/ -lh
         working-directory: ${{ github.workspace }}
