@@ -27,7 +27,7 @@ jobs:
       - name: Build exe
         run: |
           pyinstaller --onefile --windowed main.py
-          ls -lh
+          ls dist/ -lh
         working-directory: ${{ github.workspace }}
       
       - name: Create Release
@@ -36,8 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0  # 你的版本号
-          release_name: Release v1.0.0
+          tag_name: v1.0.0-${{ github.run_id }} # 你的版本号
+          release_name: Release v1.0.0-${{ github.run_id }}
           body: Auto-generated release
           draft: false
           prerelease: false
