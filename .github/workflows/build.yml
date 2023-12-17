@@ -27,6 +27,7 @@ jobs:
       - name: Build exe
         run: |
           pyinstaller --onefile --windowed main.py
+          ls -lh
         working-directory: ${{ github.workspace }}
       
       - name: Create Release
