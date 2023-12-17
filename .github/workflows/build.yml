@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
       - name: Checkout repository
@@ -26,9 +26,8 @@ jobs:
       
       - name: Build exe
         run: |
-          # chcp 65001
-          pyinstaller -F --onefile --windowed --debug all main.py
-          ls dist/ -lh
+          pyinstaller -F --onefile --windowed --debug all -n main main.py
+          dir dist
         working-directory: ${{ github.workspace }}
       
       - name: Create Release
@@ -37,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0-${{ github.run_id }} # 你的版本号
+          tag_name: v1.0.0-${{ github.run_id }}
           release_name: Release v1.0.0-${{ github.run_id }}
           body: Auto-generated release
           draft: false
@@ -50,6 +49,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/main  # 你的可执行文件路径
+          asset_path: dist\main.exe  # 使用反斜杠
           asset_name: main.exe
           asset_content_type: application/octet-stream
