@@ -73,7 +73,7 @@ jobs:
 
       - name: Build app
         run: |
-          pyinstaller -F --onefile --windowed --debug all -n main main.py
+          pyinstaller -F --onefile -n main main.py
           ls dist
         working-directory: ${{ github.workspace }}
       
