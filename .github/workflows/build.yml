@@ -38,7 +38,8 @@ jobs:
       - name: Debug
         run: |
           ls -R
-      - name: Upload exe to GitHub Releases
+      #- name: Upload exe to GitHub Releases
+      - name: exe
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
