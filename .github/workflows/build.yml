@@ -54,7 +54,7 @@ jobs:
           $hash = Get-FileHash  dist\main.exe -Algorithm SHA256
           $hashValue = $hash.Hash
           Write-Host "::set-output name=sha256::$hashValue"
-          echo $hashValue >> dist\sha256_${{$hashValue}}.txt
+          echo $hashValue >> "dist\sha256_$hashValue.txt"
           
       - name: Upload Release Asset exe
         id: upload-release-asset
