@@ -1,31 +1,40 @@
 <h1 align="center">我的数据我做主</h1>
 <div align="center">
-<img src="https://img.shields.io/badge/WeChat-留痕-blue.svg">
-<a href="https://github.com/LC044/WeChatMsg/stargazers">
-    <img src="https://img.shields.io/github/stars/LC044/WeChatMsg.svg" />
-</a>
-<a href="https://github.com/LC044/WeChatMsg/issues">
-      <img alt="Issues" src="https://img.shields.io/github/issues/LC044/WeChatMsg?color=0088ff" />
+    <a href="https://github.com/LC044/WeChatMsg/stargazers">
+        <img src="https://img.shields.io/github/stars/LC044/WeChatMsg.svg" />
     </a>
-<a href="./doc/readme.md">
-    <img src="https://img.shields.io/badge/文档-最新-brightgreen.svg" />
-</a>
-<a href="LICENSE">
-    <img src="https://img.shields.io/github/license/LC044/WeChatMsg" />
-</a>
+    <a href="https://memotrace.lc044.love/" target="_blank">
+        <img alt="GitHub forks" src="https://img.shields.io/github/forks/LC044/WeChatMsg?color=eb6ea5">
+    </a>
+    <a href="https://memotrace.lc044.love/" target="_blank">
+        <img src="https://img.shields.io/badge/WeChat-留痕-blue.svg">
+    </a>
+    <a target="_blank" href="https://memotrace.lc044.love/">
+        <img alt="Hits" src="https://hits.b3log.org/LC044/memotrace.svg">
+    </a>
+    <a href="https://memotrace.lc044.love/" target="_blank">
+        <img src="https://img.shields.io/github/license/LC044/WeChatMsg" />
+    </a>
+    <a href="https://github.com/LC044/WeChatMsg/releases" target="_blank">
+        <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/LC044/WeChatMsg">
+    </a>
+    <a href="https://memotrace.lc044.love/" target="_blank">
+        <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/LC044/WeChatMsg/total?color=3eb370">
+    </a>
 </div>
 
 <div align="center">
-<a><img src="https://blog.lc044.love/static/img/91cadaae3a6f7ee133dafd4f9b5d8680.logo.webp" height="240"/></a>
+    <a href="https://memotrace.lc044.love/"><img src="https://memotrace.lc044.love/img/logo%20-%20%E5%89%AF%E6%9C%AC.png" height="240"/></a>
 </div>
+
 <blockquote>
 <div style="background-color: #eaf7ea; border-radius: 10px; padding: 20px; position: relative;">
   <div style="position: relative;">
     <div style="position: absolute;top: 0;bottom: 0;left: 0;width: 2px;background-color: #000000;"></div>
     <h2>前言</h2>
     <div style="text-indent: 2em;">
-        <div align="center"><img src="https://blog.lc044.love/static/img/7393a67ac602f7761e3c7b806165c892.logo99.webp"/></div>
-        <p style="text-indent:2em;">我深信有意义的不是微信，而是隐藏在对话框背后的一个个<strong>深刻故事</strong>。未来，每个人都能拥有AI的陪伴，而你的数据能够赋予它有关与你过去的珍贵记忆。我希望每个人都有将自己的生活痕迹👨‍👩‍👦👚🥗🏠️🚴🧋⛹️🛌🛀留存的权利，而不是将之遗忘💀。</p>
+        <a align="center" href="https://memotrace.lc044.love/"><img src="./doc/images/logo99.png"/></a>
+        <p style="text-indent:2em;">我深信有意义的不是微信，而是隐藏在对话框背后的一个个<strong>深刻故事</strong>。未来，每个人都能拥有AI的陪伴，而你的数据能够赋予它有关于你过去的珍贵记忆。我希望每个人都有将自己的生活痕迹👨‍👩‍👦👚🥗🏠️🚴🧋⛹️🛌🛀留存的权利，而不是遗忘💀。</p>
         <p style="text-indent:2em;">AI的发展不仅仅是技术的提升，更是情感💞的延续。每一个对话、每一个互动都是生活中独一无二的片段，是真实而动人的情感交流。因此，我希望AI工作者们能够<strong>善用这些自己的数据</strong>，用于培训独特的、属于个体的人工智能。让<strong>个人AI成为生活中的朋友</strong>，能够理解、记录并分享我们的欢笑、泪水和成长。</p>
         <p style="text-indent:2em;">那天，AI不再是高不可攀的存在，而是融入寻常百姓家的一部分。因为<strong>每个人能拥有自己的AI</strong>，将科技的力量融入生活的方方面面。这是一场关于真情实感的革命，一场让技术变得更加人性化的探索，让我们共同见证未来的美好。</p>
         <p align="center"><strong>所以《留痕》</strong></p>
@@ -35,54 +44,62 @@
 </blockquote>
 
 ## 🍉功能
-
+- [官网](https://memotrace.lc044.love/)
 - 🔒️🔑🔓️Windows本地微信数据库
 - 还原微信聊天界面
     - 🗨文本✅
     - 🏝图片✅
     - 🐻‍❄️表情包✅ 
-    - 拍一拍等系统消息✅
+    - 拍一拍等系统消息✅ 
 - 导出聊天记录
-    - sqlite数据库✅
-    - HTML(文本、图片、视频、表情包、语音)✅
-    - CSV文档✅
+    - sqlite数据库✅ 
+    - HTML(文本、图片、视频、表情包、语音、文件、系统消息)✅ 
+    - CSV文档✅ 
     - TXT文档✅ 
-    - Word文档❎
-- 分析聊天数据，做成可视化年报(急需前端大佬提供优质模板)
+    - Word文档✅ 
+- 分析聊天数据，做成可视化年报[点击预览](https://memotrace.lc044.love/demo.html)
 - 🔥**项目持续更新中**
-    - 导出全部表情包❎
-    - 合并多个备份数据❎
-    - 文件❎
+- 开发计划
+  - 自主选择年度报告年份
+  - 一键导出全部表情包、文件、图片、视频、语音
+  - 合并多个备份数据
+  - 批量导出数据
+  - 个人年度报告
+  - 群组年度报告
+  - 按日期、关键词索引
 - 小伙伴们想要其他功能可以留言哦📬
+- 🔥项目正处于并将长期处于发展阶段，给我一些时间♾️，你所期望的未来都会实现（养成系开发者），可关注文末公众号持续获取项目更新动态
 
 ## 🥤效果
 
 <details>
 
-<img alt="聊天界面" src="https://blog.lc044.love/static/img/b355c16c4a4037deec96fd87efecb74b.image.webp"/>
+<img alt="聊天界面" src="./doc/images/chat.png"/>
 
-![image-20230520235351749](https://blog.lc044.love/static/img/beb1500f349ce289406e0e8accac63c0.clipboard-2023-12-12.webp)
+![image-20230520235351749](./doc/images/20231227211149.png)
 
-![image-20230520235351749](https://blog.lc044.love/static/img/c0e17f989978f843147fa9b8d32949b8.clipboard-2023-12-12.webp)
+![image-20230520235351749](./doc/images/20231227211215.png)
 
-![image-20230520235351749](https://blog.lc044.love/static/img/47b4476a522f79286b71438bc78a1304.clipboard-2023-12-12.webp)
+![image-20230520235351749](./doc/images/20231227211228.png)
 
-![image-20230520235400772](https://blog.lc044.love/static/img/526e20e1b8cbcd9a20ea48e242433f0a.clipboard-2023-12-12.webp)
+![image-20230520235400772](./doc/images/20231227211240.png)
 
-![image-20230520235409112](https://blog.lc044.love/static/img/e74f9747bf9e686ae5bccc678fe0c7ad.clipboard-2023-12-12.webp)
+![image-20230520235409112](./doc/images/20231227211250.png)
 
-![image-20230520235422128](https://blog.lc044.love/static/img/22edd25fc32a7a11c13d1f36f6421997.clipboard-2023-12-12.webp)
+![image-20230520235422128](./doc/images/image-20230520235338305.png)
 
-![image-20230520235431091](https://blog.lc044.love/static/img/f3f88205d4596c2d098996d86e5ede7e.clipboard-2023-12-12.webp)
+![image-20230520235431091](./doc/images/image-20230520235351749.png)
 
 </details>
 
 # ⌛使用
 
+网络有问题可移步国内网站Gitee:[https://gitee.com/lc044/WeChatMsg](https://gitee.com/lc044/WeChatMsg)
+
 小白可以先点个star⭐(💘项目不断更新中),然后去旁边[Release](https://github.com/LC044/WeChatMsg/releases)
 下载打包好的exe可执行文件，双击即可运行
 
-**⚠️注意：若出现闪退情况请右击选择用管理员身份运行exe程序，该程序不存在任何病毒，若杀毒软件提示有风险选择略过即可**
+**⚠️注意：若出现闪退情况请右击选择用管理员身份运行exe程序，该程序不存在任何病毒，若杀毒软件提示有风险选择略过即可，key为none可重启电脑**
 
 **不懂编程的请移步[Release](https://github.com/LC044/WeChatMsg/releases)，下面的东西看了可能要长脑子啦🐶**
 
@@ -129,8 +146,8 @@ python main.py
 
 ![](./doc/images/path_select.png)
 
-5. 获取到密钥和微信路径之后点击开始解密
-6. 解密后的数据库文件保存在./app/DataBase/Msg路径下
+5. 获取到key和微信路径之后点击开始启动
+6. 数据库文件保存在./app/DataBase/Msg路径下
 
 ### 3. 查看
 
@@ -142,11 +159,9 @@ python main.py
 
 显示效果
 
-<img alt="聊天界面" src="doc/images/chat_.png"/>
+<img alt="聊天界面" src="doc/images/chat.png"/>
 
 ### 4. pc端功能展示
-
-恭喜你解密成功，来看看效果吧~
 
 #### 4.1 最上方导航栏
 
@@ -157,8 +172,7 @@ python main.py
 #### 4.2 聊天界面
 
 点击**左侧导航栏——>聊天**
-，会随机跳转到某一个好友的界面，滚轮滚动，可以向上翻看更早的聊天记录（温馨提示：可能在翻的时候会有卡顿的现象，是因为数据加载需要时间，后期我们会继续优化嗷~
-）。目前聊天记录中文字、图片、表情包基本可以正常显示~
+，会随机跳转到某一个好友的界面，滚轮滚动，可以向上翻看更早的聊天记录。目前聊天记录中文字、图片基本可以正常显示~
 
 ![](./doc/images/chat_window1.png)
 
@@ -169,7 +183,7 @@ python main.py
 
 #### 4.3 好友界面
 
-点击**左侧导航栏——>好友**，会跳转到好友的界面，同样可以选择好友，右上方导航栏中有（1）统计信息（2）情感分析（3）年度报告（4）退出（5）导出聊天记录：可选择导出为word、csv、html格式。
+点击**左侧导航栏——>好友**，会跳转到好友的界面，同样可以选择好友，右上方导航栏中有（1）统计信息（2）情感分析（3）年度报告（4）退出（5）导出聊天记录：可选择导出为word、csv、html、txt格式。
 
 ![](./doc/images/contact_window.png)
 
@@ -183,6 +197,14 @@ python main.py
 
 #### 🤔如果您在pc端使用的时候出现问题，可以先参考以下方面，如果仍未解决，可以在群里交流~
 
+* 不支持Win7(可自行下载代码构建可执行程序)
+* 不支持Mac(未来或许会实现)
+* 遇到问题四大法宝
+  * 重启微信
+  * 重启exe程序
+  * 重启电脑
+  * 换电脑
+
 如果您遇到下图所示的问题，是由于没有在电脑端登录微信
 
 ![](./doc/images/login_wx.png)
@@ -193,7 +215,7 @@ python main.py
 ![](./doc/images/exe_file.png)
 
 如果您在获取信息的时候，`wxid`
-显示none，但是密钥是存在的，需要在微信文件保存的路径中选择该文件夹路径下的带有wxid_xxx的名字，填到wxid位置并继续点击`开始启动`
+显示none，但是key是存在的，需要在微信文件保存的路径中选择该文件夹路径下的带有wxid_xxx的名字，填到wxid位置并继续点击`开始启动`
 
 ![](./doc/images/with_wxid_name.png)
 
@@ -206,17 +228,12 @@ python main.py
 
 ![](./doc/images/message.png)
 
-
-#### 🤔注意
-
-解密一个微信数据库之后，登录新的微信并不会实时更改
-
 </details>
 
 
 # 🏆致谢
 
-* PC微信解密工具:[https://github.com/xaoyaoo/PyWxDump](https://github.com/xaoyaoo/PyWxDump)
+* PC微信工具:[https://github.com/xaoyaoo/PyWxDump](https://github.com/xaoyaoo/PyWxDump)
 * PyQt组件库:[https://github.com/PyQt5/CustomWidgets](https://github.com/PyQt5/CustomWidgets)
 * 我的得力助手:[ChatGPT](https://chat.openai.com/)
 
@@ -226,6 +243,7 @@ python main.py
 > 声明：该项目有且仅有一个目的：“留痕”——我的数据我做主，前提是“我的数据”其次才是“我做主”，禁止任何人以任何形式将其用于任何非法用途，对于使用该程序所造成的任何后果，所有创作者不承担任何责任🙄<br>
 > 该软件不会对您使用的微信造成任何影响，更不会对他人的微信造成任何影响，不能找回删除的聊天记录，任何企图篡改微信聊天数据的想法都是无稽之谈。本项目所有功能均建立在”前言“的基础之上，基于该项目的所有开发者均不能接受任何有悖于”前言“的功能需求，违者后果自负。
 > <br>该软件不存在任何收费，谨防上当受骗
+> <br>软件贩子勿扰，违规违法勿扰，二次开发请务必遵守开源协议
 
 [![Star History Chart](https://api.star-history.com/svg?repos=LC044/WeChatMsg&type=Date)](https://star-history.com/?utm_source=bestxtools.com#LC044/WeChatMsg&Date)
 
@@ -279,12 +297,21 @@ python main.py
 
 # 联系方式
 
-如果您遇到了问题，可以添加QQ群：**701805520**寻求帮助，由于精力有限，不能回答所有问题，所以还请您仔细阅读文档之后再考虑是否入群
+如果您遇到了问题，可以添加QQ群寻求帮助，由于精力有限，不能回答所有问题，所以还请您仔细阅读文档之后再考虑是否入群
 
 ## 加群方式
 
-1. [fork](https://github.com/LC044/WeChatMsg/forks)该项目并发起[PR](https://github.com/LC044/WeChatMsg/pulls)
-2. 宣传该项目（在任一社交平台发图文介绍该项目）
-3. [赞助](#支持该项目)该项目
+1. 关注官方公众号，回复：联系方式
+2. QQ扫码入群
 
-注意：加群时请备注您的贡献，如PR链接、宣传截图或赞助金额，若没有审核通过，可添加QQ或发邮件：863909694@qq.com反馈问题（一定要备注来意）
+后续更新将会在公众号同步发布
+<div>
+  <img src="./doc/images/weixin.png">
+  <img src="./doc/images/qq.jpg" height="200">
+</div>
+
+## License
+
+WeChatMsg is licensed under [GPLv3](./LICENSE).
+
+Copyright © 2022-2024 by SiYuan.

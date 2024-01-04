@@ -6,11 +6,14 @@ from app.DataBase.output_pc import Output
 from app.ui.Icon import Icon
 from .contactInfoUi import Ui_Form
 from .userinfo import userinfo
-from ...person import ContactPC
+from ...person import Contact, Me
 from .export_dialog import ExportDialog
 
 
 class ContactInfo(QWidget, Ui_Form):
+    """
+    显示联系人信息
+    """
     exitSignal = pyqtSignal()
     urlSignal = pyqtSignal(QUrl)
 
@@ -18,7 +21,7 @@ class ContactInfo(QWidget, Ui_Form):
     def __init__(self, contact, parent=None):
         super(ContactInfo, self).__init__(parent)
         self.setupUi(self)
-        self.contact: ContactPC = contact
+        self.contact: Contact = contact
         self.view_userinfo = userinfo.UserinfoController(self.contact)
         self.btn_back.clicked.connect(self.back)
         self.init_ui()
@@ -31,7 +34,6 @@ class ContactInfo(QWidget, Ui_Form):
         self.btn_report.clicked.connect(self.annual_report)
         self.btn_analysis.clicked.connect(self.analysis)
         self.btn_emotion.clicked.connect(self.emotionale_Analysis)
-        self.label_remark.setText(self.contact.remark)
         self.stackedWidget.addWidget(self.view_userinfo)
         self.stackedWidget.setCurrentWidget(self.view_userinfo)
         menu = QMenu(self)
@@ -62,48 +64,39 @@ class ContactInfo(QWidget, Ui_Form):
                             "马上就实现该功能"
                             )
         return
-        self.stackedWidget.setCurrentWidget(self.view_analysis)
+
+    def annual_report(self):
         if 'room' in self.contact.wxid:
             QMessageBox.warning(
                 self, '警告',
                 '暂不支持群组'
             )
             return
-        self.view_analysis.start()
-
-    def annual_report(self):
-        # QMessageBox.warning(
-        #     self,
-        #     "提示",
-        #     "敬请期待"
-        # )
-        # return
         self.contact.save_avatar()
+        Me().save_avatar()
         self.report_thread = ReportThread(self.contact)
         self.report_thread.okSignal.connect(lambda x: QDesktopServices.openUrl(QUrl("http://127.0.0.1:21314")))
         self.report_thread.start()
-        QDesktopServices.openUrl(QUrl("http://127.0.0.1:21314"))
+        QDesktopServices.openUrl(QUrl("http://127.0.0.1:21314/christmas"))
 
     def emotionale_Analysis(self):
+        if 'room' in self.contact.wxid:
+            QMessageBox.warning(
+                self, '警告',
+                '暂不支持群组'
+            )
+            return
         QMessageBox.warning(self,
                             "别急别急",
                             "马上就实现该功能"
                             )
         return
-        self.stackedWidget.setCurrentWidget(self.view_emotion)
-        if 'room' in self.contact.wxid:
-            QMessageBox.warning(
-                self, '警告',
-                '暂不支持群组'
-            )
-            return
-        self.view_emotion.start()
 
     def back(self):
         """
         将userinfo界面设置为可见，其他界面设置为不可见
         """
-        self.stackedWidget.setCurrentWidget(self.view_userinfo)
+        return
 
     def output(self):
         """
@@ -112,13 +105,8 @@ class ContactInfo(QWidget, Ui_Form):
         """
         self.stackedWidget.setCurrentWidget(self.view_userinfo)
         if self.sender() == self.toDocxAct:
-            print('功能暂未实现')
-            QMessageBox.warning(self,
-                                "别急别急",
-                                "马上就实现该功能"
-                                )
-            return
-            self.outputThread = Output(self.Me, self.contact.wxid)
+            dialog = ExportDialog(self.contact, title='选择导出的消息类型', file_type='docx', parent=self)
+            result = dialog.exec_()  # 使用exec_()获取用户的操作结果
         elif self.sender() == self.toCSVAct:
             # self.outputThread = Output(self.contact, type_=Output.CSV)
             dialog = ExportDialog(self.contact,title='选择导出的消息类型', file_type='csv', parent=self)
@@ -129,24 +117,6 @@ class ContactInfo(QWidget, Ui_Form):
         elif self.sender() == self.toTxtAct:
             dialog = ExportDialog(self.contact, title='选择导出的消息类型', file_type='txt', parent=self)
             result = dialog.exec_()  # 使用exec_()获取用户的操作结果
-
-    def hide_progress_bar(self, int):
-        reply = QMessageBox(self)
-        reply.setIcon(QMessageBox.Information)
-        reply.setWindowTitle('OK')
-        reply.setText(f"导出聊天记录成功\n在./data/目录下(跟exe文件在一起)")
-        reply.addButton("确认", QMessageBox.AcceptRole)
-        reply.addButton("取消", QMessageBox.RejectRole)
-        api = reply.exec_()
-        self.view_userinfo.progressBar.setVisible(False)
-
-    def output_progress(self, value):
-        self.view_userinfo.progressBar.setProperty('value', value)
-
-    def set_progressBar_range(self, value):
-        self.view_userinfo.progressBar.setVisible(True)
-        self.view_userinfo.progressBar.setRange(0, value)
-
 
 class ReportThread(QThread):
     okSignal = pyqtSignal(bool)

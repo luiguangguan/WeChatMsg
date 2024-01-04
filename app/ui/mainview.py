@@ -18,11 +18,13 @@ from app import config
 from app.DataBase import msg_db, misc_db, micro_msg_db, hard_link_db, close_db
 from app.ui.Icon import Icon
 from . import mainwindow
+from .about_dialog import AboutDialog
 from .chat import ChatWindow
 from .contact import ContactWindow
 from .tool.tool_window import ToolWindow
 from ..DataBase.output_pc import Output
-from ..person import MePC
+from ..components.QCursorGif import QCursorGif
+from ..person import Me
 
 # 美化样式表
 Stylesheet = """
@@ -33,8 +35,8 @@ QWidget{
 QListWidget, QListView, QTreeWidget, QTreeView {
     outline: 0px;
 }
-QPushButton:menu-indicator {
-}
+
+
 QMenu::item:selected {
       color: black;
       background: rgb(230, 235, 240);
@@ -69,7 +71,7 @@ HistoryPanel::item:hover {
 """
 
 
-class MainWinController(QMainWindow, mainwindow.Ui_MainWindow):
+class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
     exitSignal = pyqtSignal(bool)
     okSignal = pyqtSignal(bool)
 
@@ -79,6 +81,10 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow):
         self.outputThread0 = None
         self.outputThread = None
         self.setupUi(self)
+        # 设置忙碌光标图片数组
+        self.initCursor([':/icons/icons/Cursors/%d.png' %
+                         i for i in range(8)], self)
+        self.setCursorTimeout(100)
         # self.setWindowIcon(Icon.MainWindow_Icon)
         pixmap = QPixmap(Icon.logo_ico_path)
         icon = QIcon(pixmap)
@@ -100,7 +106,7 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow):
                 dic = json.loads(f.read())
                 wxid = dic.get('wxid')
                 if wxid:
-                    me = MePC()
+                    me = Me()
                     me.wxid = dic.get('wxid')
                     me.name = dic.get('name')
                     me.mobile = dic.get('mobile')
@@ -172,6 +178,7 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow):
         try:
             img_bytes = misc_db.get_avatar_buffer(wxid)
         except :
+            close_db()
             QMessageBox.critical(self, "数据库错误", "请重启微信后重试")
             import shutil
             shutil.rmtree('./app/Database/Msg')
@@ -183,8 +190,10 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow):
         else:
             self.avatar.loadFromData(img_bytes, format='jfif')
         self.avatar.scaled(60, 60)
-        me = MePC()
+        contact_info_list = micro_msg_db.get_contact_by_username(wxid)
+        me = Me()
         me.set_avatar(img_bytes)
+        me.smallHeadImgUrl = contact_info_list[7]
         self.myavatar.setScaledContents(True)
         self.myavatar.setPixmap(self.avatar)
 
@@ -207,25 +216,31 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow):
                 self.stackedWidget.setCurrentIndex(0)
 
     def output(self):
+        # self.startBusy()
         if self.sender() == self.action_output_CSV:
             self.outputThread = Output(None, type_=Output.CSV_ALL)
+            self.outputThread.startSignal.connect(lambda x:self.startBusy())
             self.outputThread.okSignal.connect(
                 lambda x: self.message('聊天记录导出成功'))
             self.outputThread.start()
         elif self.sender() == self.action_output_contacts:
             self.outputThread = Output(None, type_=Output.CONTACT_CSV)
+            self.outputThread.startSignal.connect(lambda x: self.startBusy())
             self.outputThread.okSignal.connect(
                 lambda x: self.message('联系人导出成功'))
             self.outputThread.start()
 
     def message(self, msg):
+        self.stopBusy()
         QMessageBox.about(self, "提醒", msg)
 
     def about(self):
         """
         关于
         """
-        QMessageBox.about(self, "关于",config.about)
+        # QMessageBox.about(self, "关于",config.about)
+        about_view = AboutDialog(self)
+        about_view.show()
 
     def decrypt_success(self):
         QMessageBox.about(self, "解密成功", "请重新启动")

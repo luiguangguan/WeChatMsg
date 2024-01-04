@@ -4,12 +4,19 @@ from PyQt5.QtWidgets import QWidget, QListWidgetItem, QLabel
 
 from app.ui.Icon import Icon
 from .pc_decrypt import DecryptControl
+from .setting.setting import SettingControl
 from .toolUI import Ui_Dialog
 
 # 美化样式表
 Stylesheet = """
 QPushButton{
     background-color: rgb(250,252,253);
+    border-radius: 5px;
+    padding: 8px;
+    border-right: 2px solid #888888;  /* 按钮边框，2px宽，白色 */
+    border-bottom: 2px solid #888888;  /* 按钮边框，2px宽，白色 */
+    border-left: 1px solid #ffffff;  /* 按钮边框，2px宽，白色 */
+    border-top: 1px solid #ffffff;  /* 按钮边框，2px宽，白色 */
 }
 QPushButton:hover { 
     background-color: lightgray;
@@ -60,13 +67,15 @@ class ToolWindow(QWidget, Ui_Dialog):
         self.listWidget.clear()
         self.listWidget.currentRowChanged.connect(self.setCurrentIndex)
         chat_item = QListWidgetItem(Icon.Decrypt_Icon, '解密', self.listWidget)
-        contact_item = QListWidgetItem(Icon.Contact_Icon, '别点', self.listWidget)
+        contact_item = QListWidgetItem(Icon.Contact_Icon, '设置', self.listWidget)
         myinfo_item = QListWidgetItem(Icon.Home_Icon, '别点', self.listWidget)
         tool_item = QListWidgetItem(Icon.Home_Icon, '别点', self.listWidget)
         decrypt_window = DecryptControl()
         decrypt_window.get_wxidSignal.connect(self.get_info_signal)
         decrypt_window.DecryptSignal.connect(self.decrypt_success_signal)
         self.stackedWidget.addWidget(decrypt_window)
+        setting_window = SettingControl()
+        self.stackedWidget.addWidget(setting_window)
         label = QLabel('都说了不让你点', self)
         label.setFont(QFont("微软雅黑", 50))
         label.setAlignment(Qt.AlignCenter)
@@ -74,7 +83,7 @@ class ToolWindow(QWidget, Ui_Dialog):
         # 这里加了一个margin边距(方便区分QStackedWidget和QLabel的颜色)
         # label.setStyleSheet('background: rgb(%d, %d, %d);margin: 50px;' % (
         #     randint(0, 255), randint(0, 255), randint(0, 255)))
-        self.stackedWidget.addWidget(label)
+
         self.stackedWidget.addWidget(label)
         self.stackedWidget.addWidget(label)
         self.listWidget.setCurrentRow(0)

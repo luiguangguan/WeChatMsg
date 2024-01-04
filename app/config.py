@@ -1,21 +1,22 @@
-version = '0.2.9'
+version = '1.0.3'
 contact = '701805520'
 github = 'https://github.com/LC044/WeChatMsg'
-website = 'http://memotrace.lc044.love/'
-copyright = '©2023-2023 ShuaikangZhou'
+website = 'https://memotrace.lc044.love/'
+copyright = '© 2022-2024 SiYuan'
+license = 'GPLv3'
 description = [
     '1. 支持获取个人信息<br>',
     '2. 支持显示聊天界面<br>',
     '3. 支持导出聊天记录<br>&nbsp;&nbsp;&nbsp;&nbsp;* csv<br>&nbsp;&nbsp;&nbsp;&nbsp;* html<br>&nbsp;&nbsp;&nbsp;&nbsp;* '
-    'txt<br>',
-    '4. 查找联系人<br>',
-    '5. 生成年度报告<br>',
+    'txt<br>&nbsp;&nbsp;&nbsp;&nbsp;* docx<br>',
+    '4. 生成年度报告——圣诞特别版',
 ]
 about = f'''
     版本：{version}<br>
-    QQ交流群:{contact},加群要求请阅读文档<br>
+    QQ交流群:请关注微信公众号回复：联系方式<br>
     地址：<a href='{github}'>{github}</a><br>
     官网：<a href='{website}'>{website}</a><br>
     新特性:<br>{''.join(['' + i for i in description])}<br>
+    License <a href='https://github.com/LC044/WeChatMsg/blob/master/LICENSE' target='_blank'>{license}</a><br>
     Copyright {copyright}
 '''
