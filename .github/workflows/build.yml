@@ -42,8 +42,21 @@ jobs:
           body: Auto-generated release
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset
+          
+      #压缩打包资产文件
+      - name: Create ZIP archive
+        id: CreateFile
+        run: |
+          $version = $env:APPVEYOR_BUILD_VERSION
+          $zip_file = "dist\mainExe.zip"
+          #Compress-Archive -Path "./bin/Release/${{ env.main_project}}.dll" -DestinationPath "./bin/Release/$zip_file"
+          Compress-Archive -Path dist\main.exe -DestinationPath $zip_file
+          $hash = Get-FileHash  dist\main.exe -Algorithm SHA256
+          $hashValue = $hash.Hash
+          Write-Host "::set-output name=sha256::$hashValue"
+          echo $hashValue >> dist\sha256_${{$hashValue}}.txt
+          
+      - name: Upload Release Asset exe
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
@@ -52,6 +65,28 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist\main.exe
           asset_name: main.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset zip
+        id: upload-release-asset-zip
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist\mainExe.zip
+          asset_name: mainExe.zip
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset sha256
+        id: upload-release-asset-sha256
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist\sha256_${{ steps.CreateFile.outputs.sha256 }}}.txt
+          asset_name: sha256_${{ steps.CreateFile.outputs.sha256 }}}.txt
           asset_content_type: application/octet-stream
   build-macOS:
     runs-on: macos-latest
@@ -88,7 +123,7 @@ jobs:
           body: Auto-generated release
           draft: false
           prerelease: false
-
+          
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
