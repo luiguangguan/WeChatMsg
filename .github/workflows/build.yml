@@ -52,7 +52,7 @@ jobs:
           #Compress-Archive -Path "./bin/Release/${{ env.main_project}}.dll" -DestinationPath "./bin/Release/$zip_file"
           Compress-Archive -Path dist\main.exe -DestinationPath $zip_file
           $hash = Get-FileHash  dist\main.exe -Algorithm SHA256
-          $hashValue = $hash.Hash
+          $hashValue = $hash.Hash.ToLower()
           Write-Host "::set-output name=sha256::$hashValue"
           echo $hashValue >> "dist\sha256_$hashValue.txt"
           
@@ -85,8 +85,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist\sha256_${{ steps.CreateFile.outputs.sha256 }}}.txt
-          asset_name: sha256_${{ steps.CreateFile.outputs.sha256 }}}.txt
+          asset_path: dist\sha256_${{ steps.CreateFile.outputs.sha256 }}.txt
+          asset_name: sha256_${{ steps.CreateFile.outputs.sha256 }}.txt
           asset_content_type: application/octet-stream
   build-macOS:
     runs-on: macos-latest
