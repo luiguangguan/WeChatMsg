@@ -67,6 +67,7 @@
   - 个人年度报告
   - 群组年度报告
   - 按日期、关键词索引
+  - 支持企业微信好友
 - 小伙伴们想要其他功能可以留言哦📬
 - 🔥项目正处于并将长期处于发展阶段，给我一些时间♾️，你所期望的未来都会实现（养成系开发者），可关注文末公众号持续获取项目更新动态
 
@@ -271,6 +272,7 @@ python main.py
 
 - [STDquantum](https://github.com/STDquantum)
 - [xuanli](https://github.com/xuanli)
+- [无名路人](https://github.com/wumingluren)
 
 如果您提供赞助并希望出现在赞助者名单中，请在提交赞助时提供您的 GitHub 用户名或其他相关信息。
 
@@ -310,7 +312,15 @@ python main.py
   <img src="./doc/images/qq.jpg" height="200">
 </div>
 
-## License
+## AI交流
+
+欢迎对“前言”中AI感兴趣的加入QQ群（不负责任何答疑），让我们一起探讨新技术，钻研新方案，将科技的力量融入生活，打造出一个真正具有情感的个人AI
+
+<div>
+  <img src="doc/images/ai_qq.jpg" height="200">
+</div>
+
+# License
 
 WeChatMsg is licensed under [GPLv3](./LICENSE).
 

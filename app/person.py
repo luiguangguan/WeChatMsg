@@ -47,8 +47,9 @@ class Person:
             os.makedirs('./data/avatar', exist_ok=True)
             save_path = os.path.join(f'data/avatar/', self.wxid + '.png')
         self.avatar_path = save_path
-        self.avatar.save(save_path)
-        print('保存头像', save_path)
+        if not os.path.exists(save_path):
+            self.avatar.save(save_path)
+            print('保存头像', save_path)
 
 
 @singleton
@@ -74,7 +75,7 @@ class Contact(Person):
         self.nickName = contact_info.get('NickName')
         if not self.remark:
             self.remark = self.nickName
-        self.remark = re.sub(r'[\/:*?"<>|\s]', '_', self.remark)
+        self.remark = re.sub(r'[\/:*?"<>|\s\.]', '_', self.remark)
         self.smallHeadImgUrl = contact_info.get('smallHeadImgUrl')
         self.smallHeadImgBLOG = b''
         self.avatar = QPixmap()

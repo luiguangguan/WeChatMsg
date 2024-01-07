@@ -47,7 +47,7 @@ class MicroMsg:
                     FROM Contact
                     INNER JOIN ContactHeadImgUrl ON Contact.UserName = ContactHeadImgUrl.usrName
                     LEFT JOIN ContactLabel ON Contact.LabelIDList = ContactLabel.LabelId
-                    WHERE (Type!=4)
+                    WHERE (Type!=4 AND VerifyFlag=0)
                         AND NickName != ''
                     ORDER BY 
                         CASE
@@ -55,6 +55,22 @@ class MicroMsg:
                             ELSE RemarkPYInitial
                         END ASC
                   '''
+            self.cursor.execute(sql)
+            result = self.cursor.fetchall()
+        except sqlite3.OperationalError:
+            # lock.acquire(True)
+            sql = '''
+                   SELECT UserName, Alias, Type, Remark, NickName, PYInitial, RemarkPYInitial, ContactHeadImgUrl.smallHeadImgUrl, ContactHeadImgUrl.bigHeadImgUrl,ExTraBuf,"None"
+                   FROM Contact
+                   INNER JOIN ContactHeadImgUrl ON Contact.UserName = ContactHeadImgUrl.usrName
+                   WHERE (Type!=4 AND VerifyFlag=0)
+                        AND NickName != ''
+                    ORDER BY 
+                        CASE
+                            WHEN RemarkPYInitial = '' THEN PYInitial
+                            ELSE RemarkPYInitial
+                        END ASC
+            '''
             self.cursor.execute(sql)
             result = self.cursor.fetchall()
         finally:
@@ -74,6 +90,17 @@ class MicroMsg:
                    LEFT JOIN ContactLabel ON Contact.LabelIDList = ContactLabel.LabelId
                    WHERE UserName = ?
                 '''
+            self.cursor.execute(sql, [username])
+            result = self.cursor.fetchone()
+        except sqlite3.OperationalError:
+            # 解决ContactLabel表不存在的问题
+            # lock.acquire(True)
+            sql = '''
+                   SELECT UserName, Alias, Type, Remark, NickName, PYInitial, RemarkPYInitial, ContactHeadImgUrl.smallHeadImgUrl, ContactHeadImgUrl.bigHeadImgUrl,ExTraBuf,"None"
+                   FROM Contact
+                   INNER JOIN ContactHeadImgUrl ON Contact.UserName = ContactHeadImgUrl.usrName
+                   WHERE UserName = ?
+            '''
             self.cursor.execute(sql, [username])
             result = self.cursor.fetchone()
         finally:

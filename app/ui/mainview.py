@@ -14,13 +14,13 @@ from PyQt5.QtCore import pyqtSignal, QUrl, Qt, QThread, QSize
 from PyQt5.QtGui import QPixmap, QFont, QDesktopServices, QIcon
 from PyQt5.QtWidgets import QMainWindow, QLabel, QListWidgetItem, QMessageBox
 
-from app import config
-from app.DataBase import msg_db, misc_db, micro_msg_db, hard_link_db, close_db
+from app.DataBase import misc_db, micro_msg_db, close_db
 from app.ui.Icon import Icon
 from . import mainwindow
-from .about_dialog import AboutDialog
+from app.ui.menu.about_dialog import AboutDialog
 from .chat import ChatWindow
 from .contact import ContactWindow
+from .menu.export import ExportDialog
 from .tool.tool_window import ToolWindow
 from ..DataBase.output_pc import Output
 from ..components.QCursorGif import QCursorGif
@@ -35,8 +35,6 @@ QWidget{
 QListWidget, QListView, QTreeWidget, QTreeView {
     outline: 0px;
 }
-
-
 QMenu::item:selected {
       color: black;
       background: rgb(230, 235, 240);
@@ -81,10 +79,7 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
         self.outputThread0 = None
         self.outputThread = None
         self.setupUi(self)
-        # 设置忙碌光标图片数组
-        self.initCursor([':/icons/icons/Cursors/%d.png' %
-                         i for i in range(8)], self)
-        self.setCursorTimeout(100)
+
         # self.setWindowIcon(Icon.MainWindow_Icon)
         pixmap = QPixmap(Icon.logo_ico_path)
         icon = QIcon(pixmap)
@@ -99,6 +94,14 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
         self.label = QLabel(self)
         self.label.setGeometry((self.width() - 300) // 2, (self.height() - 100) // 2, 300, 100)
         self.label.setPixmap(QPixmap(':/icons/icons/loading.svg'))
+        self.menu_output.setIcon(Icon.Output)
+        self.action_output_CSV.setIcon(Icon.ToCSV)
+        self.action_output_CSV.triggered.connect(self.output)
+        self.action_output_contacts.setIcon(Icon.Output)
+        self.action_output_contacts.triggered.connect(self.output)
+        self.action_batch_export.setIcon(Icon.Output)
+        self.action_batch_export.triggered.connect(self.output)
+        self.action_desc.setIcon(Icon.Help_Icon)
 
     def load_data(self, flag=True):
         if os.path.exists('./app/data/info.json'):
@@ -121,12 +124,15 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
             )
 
     def init_ui(self):
-        self.menu_output.setIcon(Icon.Output)
-        self.action_output_CSV.setIcon(Icon.ToCSV)
-        self.action_output_CSV.triggered.connect(self.output)
-        self.action_output_contacts.setIcon(Icon.Output)
-        self.action_output_contacts.triggered.connect(self.output)
-        self.action_desc.setIcon(Icon.Help_Icon)
+
+        # 设置忙碌光标图片数组
+        self.initCursor([':/icons/icons/Cursors/%d.png' %
+                         i for i in range(8)])
+        self.setCursorTimeout(100)
+
+        self.startBusy()
+
+
         self.action_help_contact.triggered.connect(
             lambda: QDesktopServices.openUrl(QUrl("https://blog.lc044.love/post/5")))
         self.action_help_chat.triggered.connect(
@@ -199,6 +205,7 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
 
     def stop_loading(self, a0):
         self.label.setVisible(False)
+        self.stopBusy()
 
     def loading(self, a0):
         self.load_num += 1
@@ -208,6 +215,7 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
             self.okSignal.emit(True)
             self.listWidget.setVisible(True)
             self.stackedWidget.setVisible(True)
+            self.stopBusy()
             if self.load_flag:
                 self.listWidget.setCurrentRow(1)
                 self.stackedWidget.setCurrentIndex(1)
@@ -229,6 +237,9 @@ class MainWinController(QMainWindow, mainwindow.Ui_MainWindow,QCursorGif):
             self.outputThread.okSignal.connect(
                 lambda x: self.message('联系人导出成功'))
             self.outputThread.start()
+        elif self.sender() == self.action_batch_export:
+            dialog = ExportDialog(None, title='批量导出聊天记录', parent=self)
+            result = dialog.exec_()  # 使用exec_()获取用户的操作结果
 
     def message(self, msg):
         self.stopBusy()

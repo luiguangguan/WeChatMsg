@@ -8,7 +8,6 @@ from PyQt5.QtCore import pyqtSignal, QThread
 
 from app.DataBase import msg_db, hard_link_db, media_msg_db
 from app.DataBase.output import ExporterBase, escape_js_and_html
-from app.DataBase.package_msg import PackageMsg
 from app.log import logger
 from app.person import Me
 from app.util import path
@@ -82,10 +81,12 @@ class HtmlExporter(ExporterBase):
         try:
             audio_path = media_msg_db.get_audio_path(msgSvrId, output_path=origin_docx_path + "/voice")
             audio_path = "./voice/" + os.path.basename(audio_path)
-            voice_to_text = escape_js_and_html(media_msg_db.get_audio_text(str_content))
         except:
             logger.error(traceback.format_exc())
             return
+        voice_to_text = media_msg_db.get_audio_text(str_content)
+        if voice_to_text and voice_to_text != "":
+            voice_to_text = escape_js_and_html(voice_to_text)
         doc.write(
             f'''{{ type:34, text:'{audio_path}',is_send:{is_send},avatar_path:'{avatar}',voice_to_text:'{voice_to_text}',timestamp:{timestamp},is_chatroom:{is_chatroom},displayname:'{display_name}'}},'''
         )
@@ -274,11 +275,7 @@ class HtmlExporter(ExporterBase):
         )
 
     def export(self):
-        if self.contact.is_chatroom:
-            packagemsg = PackageMsg()
-            messages = packagemsg.get_package_message_by_wxid(self.contact.wxid)
-        else:
-            messages = msg_db.get_messages(self.contact.wxid)
+        messages = msg_db.get_messages(self.contact.wxid)
         filename = f"{os.path.abspath('.')}/data/聊天记录/{self.contact.remark}/{self.contact.remark}.html"
         file_path = './app/resources/data/template.html'
         if not os.path.exists(file_path):
@@ -301,11 +298,6 @@ class HtmlExporter(ExporterBase):
             else:
                 self.progressSignal.emit(1)
 
-            if self.is_5_min(timestamp):
-                str_time = message[8]
-                f.write(
-                    f'''{{ type:0, text: '{str_time}',is_send:0,avatar_path:'',timestamp:{timestamp}}},'''
-                )
             if type_ == 1 and self.message_types.get(type_):
                 self.text(f, message)
             elif type_ == 3 and self.message_types.get(type_):
